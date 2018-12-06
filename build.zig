@@ -14,8 +14,16 @@ pub fn build(b: *Builder) void {
   image.linkSystemLibrary("SDL2_image");
   image.linkSystemLibrary("SDL2");
   image.linkSystemLibrary("c");
-
   b.default_step.dependOn(&image.step);
+
+  const map = b.addExecutable("map", "src/map.zig");
+  map.setBuildMode(mode);
+  map.linkSystemLibrary("SDL2_image");
+  map.linkSystemLibrary("SDL2");
+  map.linkSystemLibrary("c");
+  b.default_step.dependOn(&map.step);
+
   b.installArtifact(snake);
   b.installArtifact(image);
+  b.installArtifact(map);
 }
